@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	xmlns:local="clr-namespace:Sundbaten" 
+	x:Class="Sundbaten.SundbatenPage"
+	Title="Tidtabell Sundbåten"
+	BackgroundColor="{x:Static local:SundbatColors.Gul}">
+
+	<StackLayout HorizontalOptions="FillAndExpand"
+               VerticalOptions="FillAndExpand">
+		<Image Source="sundbaten.png" Margin="20,25,20,0" HorizontalOptions="Center"></Image>
+		<Label Margin="0" TextColor="{x:Static local:SundbatColors.Gronn}" HorizontalOptions="CenterAndExpand" Text="{Binding BaseTimeTable.Title}"></Label>
+		
+		<StackLayout HorizontalOptions="FillAndExpand" IsVisible="{Binding VisNesteAvgang}" BackgroundColor="{x:Static local:SundbatColors.Gronn}" Padding="10">
+			<Label Margin="0" TextColor="White" HorizontalOptions="CenterAndExpand" Text="Neste avgang fra Kirkelandet om"></Label>
+			<Label Margin="0" TextColor="White" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" Text="{Binding NesteAvgangStr}"></Label>
+		</StackLayout>
+		<ListView BackgroundColor="{x:Static local:SundbatColors.Gul}"  ItemsSource="{Binding BaseTimeTable}" HorizontalOptions="FillAndExpand" Margin="0">
+		<ListView.ItemTemplate>
+			<DataTemplate>
+				<TextCell  TextColor="{x:Static local:SundbatColors.Gronn}" Text="{Binding NesteSted}" Detail="{Binding Details}" DetailColor="{x:Static local:SundbatColors.Gronn}"></TextCell>
+			</DataTemplate>
+		</ListView.ItemTemplate>
+	</ListView>
+	<StackLayout BackgroundColor="{x:Static local:SundbatColors.Gronn}" Padding="15,5">
+		<Button TextColor="White"  Text="Appen er utviklet av ON IT AS. Annonsere? Klikk her." FontSize="12" HeightRequest="20" Clicked="Handle_Clicked"/>
+	</StackLayout>
+    <StackLayout.BindingContext>
+		<local:TimeTable/>
+	</StackLayout.BindingContext>
+  </StackLayout>
+</ContentPage>
