@@ -7,15 +7,15 @@
 	BackgroundColor="{x:Static local:SundbatColors.Gul}">
 
 	<StackLayout HorizontalOptions="FillAndExpand"
-               VerticalOptions="FillAndExpand">
+               VerticalOptions="FillAndExpand" x:Name="MainStackLayout">
 		<Image Source="sundbaten.png" Margin="20,25,20,0" HorizontalOptions="Center"></Image>
 		<Label Margin="0" TextColor="{x:Static local:SundbatColors.Gronn}" HorizontalOptions="CenterAndExpand" Text="{Binding BaseTimeTable.Title}"></Label>
 		
 		<StackLayout HorizontalOptions="FillAndExpand" IsVisible="{Binding VisNesteAvgang}" BackgroundColor="{x:Static local:SundbatColors.Gronn}" Padding="10">
-			<Label Margin="0" TextColor="White" HorizontalOptions="CenterAndExpand" Text="Neste avgang fra Kirkelandet om"></Label>
+			<Label Margin="0" TextColor="White" HorizontalOptions="CenterAndExpand" Text="Neste avgang fra Kirklandet om"></Label>
 			<Label Margin="0" TextColor="White" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" Text="{Binding NesteAvgangStr}"></Label>
 		</StackLayout>
-		<ListView BackgroundColor="{x:Static local:SundbatColors.Gul}"  ItemsSource="{Binding BaseTimeTable}" HorizontalOptions="FillAndExpand" Margin="0">
+		<ListView BackgroundColor="{x:Static local:SundbatColors.Gul}"  ItemsSource="{Binding BaseTimeTable}" ItemSelected="Handle_ItemSelected" HorizontalOptions="FillAndExpand" Margin="0">
 		<ListView.ItemTemplate>
 			<DataTemplate>
 				<TextCell  TextColor="{x:Static local:SundbatColors.Gronn}" Text="{Binding NesteSted}" Detail="{Binding Details}" DetailColor="{x:Static local:SundbatColors.Gronn}"></TextCell>
@@ -23,7 +23,7 @@
 		</ListView.ItemTemplate>
 	</ListView>
 	<StackLayout BackgroundColor="{x:Static local:SundbatColors.Gronn}" Padding="15,5">
-		<Button TextColor="White"  Text="Appen er utviklet av ON IT AS. Annonsere? Klikk her." FontSize="12" HeightRequest="20" Clicked="Handle_Clicked"/>
+		<Button TextColor="White" x:Name="AdButton" Text="{Binding Title}" FontSize="12" HeightRequest="20" Clicked="Handle_Clicked"/>
 	</StackLayout>
     <StackLayout.BindingContext>
 		<local:TimeTable/>

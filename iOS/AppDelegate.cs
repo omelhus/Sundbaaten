@@ -16,10 +16,6 @@ namespace Sundbaten.iOS
 		{
 			global::Xamarin.Forms.Forms.Init();
 			LoadApplication(new App());
-			AdBannerRenderer.Init ();
-
-			//Initialize Interstitial Manager with a Specific AdMob Key
-			CrossAdmobManager.Init ("ca-app-pub-9559020873366734~1109314808");
 			return base.FinishedLaunching(app, options);
 		}
 	}

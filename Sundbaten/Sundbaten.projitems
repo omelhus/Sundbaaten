@@ -21,5 +21,8 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)TimeTable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SundbatenColors.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TimeTableEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TimeTableClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TimeTableCollection.cs" />
   </ItemGroup>
 </Project>
