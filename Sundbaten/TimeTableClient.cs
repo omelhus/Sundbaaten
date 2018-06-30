@@ -35,6 +35,8 @@ namespace Sundbaten
 
         [JsonProperty("sondag")]
         public TimeTableResponseEntry sondag { get; set; }
+
+        public DateTime LastUpdate { get; set; }
     }
 
     public class TimeTableResponseEntry {

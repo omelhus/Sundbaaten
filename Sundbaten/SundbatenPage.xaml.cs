@@ -25,15 +25,20 @@ namespace Sundbaten
             }
         }
 
-		void Handle_Clicked(object sender, System.EventArgs e)
+		async void Handle_Clicked(object sender, System.EventArgs e)
 		{
             Analytics.TrackEvent("AdClicked", new Dictionary<string, string>
             {
                 {"Title", Ad.Title},
+                {"Message", Ad.Message},
                 {"Id", Ad.Id}
             });
-            if (Ad?.Link?.StartsWith("http") == true)
-                Device.OpenUri(new Uri(Ad.Link));
+            if (Ad?.Link?.StartsWith("http") == true){
+                 Device.OpenUri(new Uri(Ad.Link));
+            } else if(!string.IsNullOrEmpty(Ad?.Message)) {
+                await DisplayAlert(Ad.Title, Ad.Message, "Ferdig");
+            }
+          
 		}
 
 		public SundbatenPage()
@@ -94,11 +99,13 @@ namespace Sundbaten
             get;
             set;
         }
+        public string Message { get; set; }
 
         public void Set(Ad ad){
             Link = ad.Link;
             Id = ad.Id;
             Title = ad.Title;
+            Message = ad.Message;
         }
 
         public async Task LoadAsync(){

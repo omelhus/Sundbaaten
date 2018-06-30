@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <resources>
-	 <style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="android:icon">@android:color/transparent</item>
-    <item name="android:colorPrimary">#FFD52C</item>
-	<item name="android:textColorPrimary">#00723F</item>
-	<item name="colorPrimary"#FFD52C</item>
-    <item name="colorAccent">#00723F</item>
-    <item name="android:windowBackground">#FFD52C</item>
-  </style>
+	<style name="Sundbaten" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:icon">@android:color/transparent</item>
+        <item name="android:colorPrimary">@color/yellow</item>
+    	<item name="android:textColorPrimary">@color/green</item>
+    	<item name="colorPrimary">@color/yellow</item>
+        <item name="colorAccent">@color/green</item>
+        <item name="android:windowBackground">@color/yellow</item>
+      </style>
 	<!-- Base theme applied no matter what API -->
 	<style name="MyTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
 		<!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
@@ -28,6 +28,6 @@
 		<item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
 	</style>
 	<style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
-		<item name="colorAccent">#FF4081</item>
+		<item name="colorAccent">@color/yellow</item>
 	</style>
 </resources>

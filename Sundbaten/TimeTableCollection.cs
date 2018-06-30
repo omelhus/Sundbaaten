@@ -6,6 +6,10 @@ using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.IO;
+using Newtonsoft.Json;
+using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Analytics;
 
 namespace Sundbaten
 {
@@ -76,12 +80,49 @@ namespace Sundbaten
             var sluttSesong = new DateTimeOffset(now.Year, 8, 27, 0, 0, 0, TimeSpan.Zero);
             return now >= startSesong && now <= sluttSesong;
         }
+         
+        public string TimeTableSavePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "tidtabell.json");
+        string propertyKey = "timetable";
+        public TimeTableResponse PropLoadTimeTable()
+        {
+            if(Application.Current.Properties.ContainsKey(propertyKey)){
+                try
+                {
+                    Analytics.TrackEvent("LoadFromCache");
+                    return JsonConvert.DeserializeObject<TimeTableResponse>((string)Application.Current.Properties[propertyKey]);
+                }
+                catch (Exception e)
+                {
+                    Crashes.TrackError(e);
+                }
+            }
+            return null;
+        }
 
+        public void PropStoreTimeTable(TimeTableResponse tableResponse)
+        {
+            try
+            {
+                Application.Current.Properties[propertyKey] = JsonConvert.SerializeObject(tableResponse);
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+        }
+       
         async Task ResetTimeTable()
         {
-            var table = await TimeTableClient.GetTask();
-           if (table == null)
-                throw new ArgumentNullException("table", "Timetable is missing...");
+            var table = PropLoadTimeTable();  
+            if (table == null || table.LastUpdate < DateTime.UtcNow.AddDays(-1)){
+                Analytics.TrackEvent("UpdateTimeTable");
+                table = await TimeTableClient.GetTask();
+                table.LastUpdate = DateTime.UtcNow;
+                PropStoreTimeTable(table);
+                if(table == null)
+                    throw new ArgumentNullException("table", "Timetable is missing");
+            }
+                
             IEnumerable<TimeTableEntry> entries = null;
             switch (day.DayOfWeek)
             {
@@ -97,7 +138,7 @@ namespace Sundbaten
                     break;
             }
             if (entries == null) return;
-
+            Clear();
             foreach (var item in entries)
                 if (!item.HarReturnertKirkelandet)
                     Add(item);
