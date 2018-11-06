@@ -44,26 +44,24 @@ namespace Sundbaten
 		public SundbatenPage()
 		{
 			InitializeComponent();
-		}
-
-        public Ad Ad { get; set; }
-
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
             try
             {
-                await ((TimeTable)MainStackLayout.BindingContext).LoadAsync();
-                Analytics.TrackEvent("Appearing");
                 Ad = new Ad();
                 AdButton.BindingContext = Ad;
-                await Ad.LoadAsync();
             }
             catch (Exception e)
             {
                 Crashes.TrackError(e);
-                await DisplayAlert("Noe gikk galt", "Vi klarer dessverre ikke å vise deg rutetidene akkurat nå.", "Ok");
+                DisplayAlert("Noe gikk galt", "Vi klarer dessverre ikke å vise deg rutetidene akkurat nå.", "Ok");
             }
+		}
+
+        public Ad Ad { get; set; }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            Analytics.TrackEvent("Appearing");
         }
     }
 
@@ -73,6 +71,11 @@ namespace Sundbaten
         int _index;
 
         string title;
+
+        public Ad()
+        {
+            LoadAsync();
+        }
 
         public string Title
         {
@@ -123,7 +126,7 @@ namespace Sundbaten
                 };
             }
             if(_ads != null){
-                Set(_ads.FirstOrDefault());
+                Set(_ads[0]);
                 Device.StartTimer(TimeSpan.FromSeconds(15), () =>
                 {
                     _index++;

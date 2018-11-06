@@ -17,6 +17,7 @@ namespace Sundbaten
         public TimeTable()
         {
             BaseTimeTable = new TimeTableCollection();
+            LoadAsync();
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
                 NotifyPropertyChanged(nameof(NesteAvgang));
@@ -26,9 +27,27 @@ namespace Sundbaten
             });
         }
 
+        bool loading;
+
+        public bool Loading
+        {
+            get
+            {
+                return loading;
+            }
+
+            set
+            {
+                loading = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public async Task LoadAsync()
         {
+            Loading = true;
             await BaseTimeTable.LoadAsync();
+            Loading = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -37,6 +56,7 @@ namespace Sundbaten
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(member));
         }
+
         public bool VisNesteAvgang => NesteAvgang.HasValue;
         public string NesteAvgangStr
         {

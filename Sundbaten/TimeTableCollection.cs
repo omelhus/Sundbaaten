@@ -142,7 +142,17 @@ namespace Sundbaten
             foreach (var item in entries)
                 if (!item.HarReturnertKirkelandet)
                     Add(item);
+            Loaded = true;
         }
+
+		private bool _loaded;
+        public bool Loaded {
+			get => _loaded;
+			set {
+				_loaded = value;
+				NotifyPropertyChanged();
+			}
+		}
 
         public string Title
         {

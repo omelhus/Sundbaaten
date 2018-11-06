@@ -15,7 +15,7 @@
 			<Label Margin="0" TextColor="White" HorizontalOptions="CenterAndExpand" Text="Neste avgang fra Kirklandet om"></Label>
 			<Label Margin="0" TextColor="White" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" Text="{Binding NesteAvgangStr}"></Label>
 		</StackLayout>
-		<ListView BackgroundColor="{x:Static local:SundbatColors.Gul}"  ItemsSource="{Binding BaseTimeTable}" ItemSelected="Handle_ItemSelected" HorizontalOptions="FillAndExpand" Margin="0">
+		<ListView IsRefreshing="{Binding Loading}" BackgroundColor="{x:Static local:SundbatColors.Gul}"  ItemsSource="{Binding BaseTimeTable}" ItemSelected="Handle_ItemSelected" HorizontalOptions="FillAndExpand" Margin="0">
 		<ListView.ItemTemplate>
 			<DataTemplate>
 				<TextCell  TextColor="{x:Static local:SundbatColors.Gronn}" Text="{Binding NesteSted}" Detail="{Binding Details}" DetailColor="{x:Static local:SundbatColors.Gronn}"></TextCell>
